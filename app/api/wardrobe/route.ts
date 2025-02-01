@@ -19,7 +19,7 @@ export async function POST(request: Request) {
 
     if (image) {
       try {
-        // First try with background removal
+        
         let processedImage: Blob | null = null
         try {
           processedImage = await removeBackground(image)
@@ -28,12 +28,12 @@ export async function POST(request: Request) {
           processedImage = image
         }
 
-        // Convert the image (either processed or original) to buffer
+        
         const bytes = await new Response(processedImage).arrayBuffer()
         const buffer = Buffer.from(bytes)
 
         try {
-          // Upload to Cloudinary
+          
           const uploadResult = await uploadImage(buffer, {
             resource_type: "auto",
             folder: "wardrobe",

@@ -35,7 +35,7 @@ export async function removeBackground(image: File | Blob): Promise<Blob | null>
       }
     }
 
-    // For any other error, return the original image
+    
     console.warn("Background removal failed, using original image")
     return image
   }

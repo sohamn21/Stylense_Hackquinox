@@ -21,7 +21,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing Excel file" }, { status: 400 })
     }
 
-    // Read Excel file
+    
     const excelBuffer = await excelFile.arrayBuffer()
     const workbook = XLSX.read(new Uint8Array(excelBuffer), { type: "array" })
     const sheetName = workbook.SheetNames[0]
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
           throw new Error(`Missing image URL for item: ${item.title}`)
         }
 
-        // Fetch the image from the provided URL
+        
         try {
           const imageResponse = await fetch(item.image_url)
           if (!imageResponse.ok) {
@@ -55,14 +55,14 @@ export async function POST(request: Request) {
             processedImage = new Blob([imageBuffer])
           }
 
-          // Convert Blob to base64 for Cloudinary upload
+          
           const base64Image = await new Promise((resolve) => {
             const reader = new FileReader()
             reader.onloadend = () => resolve(reader.result)
             reader.readAsDataURL(processedImage as Blob)
           })
 
-          // Upload to Cloudinary
+          
           const uploadResult = await uploadImage(base64Image as string, {
             resource_type: "auto",
             folder: "wardrobe",
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
 
           const imageUrl = uploadResult.secure_url
 
-          // Prepare item data
+          
           const itemData = {
             userId: new ObjectId(userId),
             title: item.title || "",
@@ -123,7 +123,7 @@ export async function POST(request: Request) {
       )
     }
 
-    // Save to database
+    
     await client.connect()
     const database = client.db("wardrobe")
     const itemsCollection = database.collection("items")

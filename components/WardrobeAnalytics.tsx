@@ -86,7 +86,7 @@ export default function WardrobeAnalytics() {
         const lastUsed = item.lastUsed ? new Date(item.lastUsed) : new Date(0)
         return lastUsed < threeMonthsAgo
       })
-      .slice(0, 5) // Get top 5 underused items
+      .slice(0, 5) 
 
     setUnderusedItems(underused)
   }

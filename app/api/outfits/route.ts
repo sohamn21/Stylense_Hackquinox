@@ -35,7 +35,7 @@ export async function POST(request: Request) {
   try {
     const outfit = await request.json()
 
-    // Input validation
+   
     if (!outfit.name || !Array.isArray(outfit.items) || outfit.items.length === 0) {
       return NextResponse.json({ error: "Invalid outfit data" }, { status: 400 })
     }

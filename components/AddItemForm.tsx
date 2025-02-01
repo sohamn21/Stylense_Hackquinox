@@ -64,7 +64,7 @@ export default function AddItemForm({ initialData, isEditing = false }: AddItemF
   const [previewImage, setPreviewImage] = useState<string | null>(null)
   const [isBulkUploadOpen, setIsBulkUploadOpen] = useState(false)
   const [excelFile, setExcelFile] = useState<File | null>(null)
-  // Removed: const [zipFile, setZipFile] = useState<File | null>(null)
+ 
 
   useEffect(() => {
     if (initialData) {
@@ -78,8 +78,7 @@ export default function AddItemForm({ initialData, isEditing = false }: AddItemF
   const handleImageCapture = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true })
-      // Here you would typically show a video preview and capture button
-      // For simplicity, we'll just use the file input for now
+
     } catch (err) {
       console.error("Error accessing camera:", err)
     }
@@ -112,10 +111,10 @@ export default function AddItemForm({ initialData, isEditing = false }: AddItemF
 
   const handleImageUpload = async (file: File) => {
     try {
-      // Attempt to remove background
+  
       const backgroundRemovedImage = await removeBackground(file)
 
-      // If background removal failed, use original image
+      
       const imageToUse = backgroundRemovedImage || file
       const previewUrl = URL.createObjectURL(imageToUse)
 
@@ -135,11 +134,11 @@ export default function AddItemForm({ initialData, isEditing = false }: AddItemF
     e.preventDefault()
     const form = new FormData()
 
-    // Add all form fields to FormData
+ 
     Object.entries(formData).forEach(([key, value]) => {
       if (value !== null) {
         if (key === "purchaseDate") {
-          // Ensure purchaseDate is a valid Date object before calling toISOString()
+         
           const dateValue = value instanceof Date ? value : new Date(value)
           form.append(key, dateValue.toISOString())
         } else if (key === "isSecondhand") {
@@ -176,7 +175,7 @@ export default function AddItemForm({ initialData, isEditing = false }: AddItemF
         title: "Success",
         description: isEditing ? "Item updated successfully" : "Item added successfully",
       })
-      router.push("/wardrobe") // Redirect to the wardrobe page after saving
+      router.push("/wardrobe") 
     } catch (error) {
       console.error("Error saving item:", error)
       toast({

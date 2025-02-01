@@ -43,9 +43,8 @@ export default function OutfitCreator() {
     const [lastMousePos, setLastMousePos] = useState({ x: 0, y: 0 })
     const [canvasSize, setCanvasSize] = useState({ width: 600, height: 600 })
     const [isLoading, setIsLoading] = useState(false)
-    const [isGeminiOutfit, setIsGeminiOutfit] = useState(false) // Track if the current outfit is from Gemini
+    const [isGeminiOutfit, setIsGeminiOutfit] = useState(false) 
 
-    // Responsive canvas resizing
     useEffect(() => {
         const resizeCanvas = () => {
             const container = containerRef.current
@@ -106,7 +105,7 @@ export default function OutfitCreator() {
     }
 
     const addImageToCanvas = (wardrobeItem: WardrobeItem) => {
-        if (isGeminiOutfit) return // Disable adding items when a Gemini outfit is displayed
+        if (isGeminiOutfit) return 
 
         const canvas = canvasRef.current
         if (!canvas) return
@@ -125,7 +124,7 @@ export default function OutfitCreator() {
     }
 
     const handleCanvasMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
-        if (isGeminiOutfit) return // Disable dragging for Gemini outfits
+        if (isGeminiOutfit) return 
 
         const canvas = canvasRef.current
         if (!canvas) return
@@ -151,7 +150,7 @@ export default function OutfitCreator() {
     }
 
     const handleCanvasMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-        if (isGeminiOutfit || !isDragging || activeItemIndex === null) return // Disable dragging for Gemini outfits
+        if (isGeminiOutfit || !isDragging || activeItemIndex === null) return 
 
         const canvas = canvasRef.current
         if (!canvas) return
@@ -183,7 +182,7 @@ export default function OutfitCreator() {
     }
 
     const handleDelete = () => {
-        if (isGeminiOutfit) return // Disable deleting items for Gemini outfits
+        if (isGeminiOutfit) return 
 
         if (activeItemIndex !== null) {
             setItems((prevItems) => prevItems.filter((_, index) => index !== activeItemIndex))
@@ -194,11 +193,11 @@ export default function OutfitCreator() {
     const handleClear = () => {
         setItems([])
         setActiveItemIndex(null)
-        setIsGeminiOutfit(false) // Reset Gemini outfit state
+        setIsGeminiOutfit(false)
     }
 
     const handleScale = (scaleChange: number) => {
-        if (isGeminiOutfit) return // Disable scaling for Gemini outfits
+        if (isGeminiOutfit) return 
 
         if (activeItemIndex !== null) {
             setItems((prevItems) =>
@@ -215,7 +214,7 @@ export default function OutfitCreator() {
     }
 
     const handleRotate = (rotationChange: number) => {
-        if (isGeminiOutfit) return // Disable rotating for Gemini outfits
+        if (isGeminiOutfit) return 
 
         if (activeItemIndex !== null) {
             setItems((prevItems) =>
@@ -234,7 +233,7 @@ export default function OutfitCreator() {
     const generateOutfitCombinations = async () => {
         setIsLoading(true)
         try {
-            // Prepare image URLs for API call
+
             const imageUrls = items.map(item => item.image_url)
 
             const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -265,7 +264,7 @@ export default function OutfitCreator() {
 
             const data = await response.json()
 
-            // Add debug logging
+        
             console.log('API Response:', data)
             console.log('Response choices:', data.choices)
 
@@ -275,7 +274,7 @@ export default function OutfitCreator() {
 
             const aiResponse = data.choices[0].message.content
 
-            // Log the parsed response
+        
             console.log('AI Response:', aiResponse)
 
             const parsedCombinations = parseAIResponse(aiResponse, items)
@@ -283,7 +282,7 @@ export default function OutfitCreator() {
             setOutfitCombinations(parsedCombinations)
             setCurrentCombinationIndex(0)
             setItems(parsedCombinations[0].items)
-            setIsGeminiOutfit(true) // Mark the current outfit as a Gemini-generated outfit
+            setIsGeminiOutfit(true) 
         } catch (error) {
             console.error("Error generating outfit combinations:", error)
         } finally {
@@ -292,7 +291,7 @@ export default function OutfitCreator() {
     }
 
     const parseAIResponse = (response: string, originalItems: OutfitItem[]): OutfitCombination[] => {
-        // Implement basic parsing logic. This is a simplified example
+
         const combinations: OutfitCombination[] = []
         const combinationTexts = response.split(/Combination \d+:/i)
             .filter(text => text.trim().length > 0)
@@ -301,7 +300,7 @@ export default function OutfitCreator() {
         combinationTexts.forEach(text => {
             const description = text.split('\n')[0].trim()
 
-            // Simple matching logic - you might want to improve this
+          
             const combinationItems = originalItems.map(item => ({
                 ...item,
                 x: canvasRef.current?.width / 2 || 300,
@@ -332,7 +331,7 @@ export default function OutfitCreator() {
 
         if (outfitCombinations.length > 0) {
             setItems(outfitCombinations[currentCombinationIndex].items)
-            setIsGeminiOutfit(true) // Mark the current outfit as a Gemini-generated outfit
+            setIsGeminiOutfit(true) 
         }
     }
 

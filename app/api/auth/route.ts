@@ -28,14 +28,14 @@ export async function POST(request: Request) {
         expiresIn: "24h",
       })
 
-      // Set cookie
+ 
       cookies().set({
         name: "token",
         value: token,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
-        maxAge: 60 * 60 * 24, // 24 hours
+        maxAge: 60 * 60 * 24, 
       })
 
       return NextResponse.json({ token })
@@ -54,14 +54,14 @@ export async function POST(request: Request) {
         expiresIn: "24h",
       })
 
-      // Set cookie
+
       cookies().set({
         name: "token",
         value: token,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
-        maxAge: 60 * 60 * 24, // 24 hours
+        maxAge: 60 * 60 * 24,
       })
 
       return NextResponse.json({ token })

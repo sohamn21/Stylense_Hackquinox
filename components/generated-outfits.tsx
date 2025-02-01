@@ -68,13 +68,13 @@ export default function GeneratedOutfits({ onSave }: GeneratedOutfitsProps) {
   const [wardrobeItems, setWardrobeItems] = useState<WardrobeItem[]>([])
   const [occasion, setOccasion] = useState("everyday")
   const [purpose, setPurpose] = useState("casual")
-  // const [weather, setWeather] = useState("all season") // Removed
+ 
   const [isSaveDialogOpen, setIsSaveDialogOpen] = useState(false)
   const [outfitName, setOutfitName] = useState("")
 
   const occasionOptions = ["everyday", "work", "party", "special event"]
   const purposeOptions = ["casual", "work", "formal", "sport"]
-  // const weatherOptions = ["spring", "summer", "autumn", "winter", "all season"] // Removed
+
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -98,16 +98,16 @@ export default function GeneratedOutfits({ onSave }: GeneratedOutfitsProps) {
 const generateOutfits = async () => {
   setIsLoading(true);
   try {
-    console.log("Wardrobe items:", wardrobeItems); // Debug log
+    console.log("Wardrobe items:", wardrobeItems); 
 
     const filteredItems = wardrobeItems.filter((item) => {
-      console.log("Filtering item:", item); // Debug log
+      console.log("Filtering item:", item);
       const purposeMatch = item.purpose?.toLowerCase() === purpose.toLowerCase();
       const occasionMatch = item.occasion?.toLowerCase() === occasion.toLowerCase();
       return purposeMatch && occasionMatch;
     });
 
-    console.log("Filtered items:", filteredItems); // Debug log
+    console.log("Filtered items:", filteredItems); 
 
     if (filteredItems.length === 0) {
       throw new Error("No items match the selected criteria");
@@ -123,7 +123,6 @@ const generateOutfits = async () => {
     const aiResponse = await generateOutfitWithFailover(prompt);
     console.log("AI Response:", aiResponse);
 
-    // Extract URLs and remove any trailing commas or invalid characters
     const urls = aiResponse.match(/https?:\/\/[^\s,]+/g) || [];
 
     if (urls.length < 2) {

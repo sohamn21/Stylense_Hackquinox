@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation" // Changed from next/router to next/navigation
+import { useRouter } from "next/navigation" 
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
@@ -81,7 +81,7 @@ export default function WardrobeGallery({ filters, onImageSelect, selectionMode 
     if (items.length > 0) {
       applyFilters()
     }
-  }, [items]) // Removed unnecessary dependency: filters
+  }, [items]) 
 
   const fetchItems = async () => {
     setIsLoading(true)
@@ -97,7 +97,7 @@ export default function WardrobeGallery({ filters, onImageSelect, selectionMode 
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        credentials: "include", // Add this to include cookies
+        credentials: "include", 
       })
 
       if (!response.ok) {
@@ -121,7 +121,7 @@ export default function WardrobeGallery({ filters, onImageSelect, selectionMode 
         variant: "destructive",
       })
 
-      // If unauthorized, redirect to auth page
+    
       if (error.message.includes("authentication")) {
         router.push("/auth")
       }
